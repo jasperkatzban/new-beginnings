@@ -2,11 +2,57 @@
 	import { writable } from 'svelte/store';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+
 	import Prando from 'prando';
 
 	import ideas from '$lib/ideas.js';
 	import randomizeIcon from '$lib/assets/randomizeIcon.svg';
-	import waveFrame from '$lib/assets/wave.svg';
+	import * as imgSrcs from '$lib/assets/frame/';
+
+	type imgSrcKey = keyof typeof imgSrcs;
+	const frameCornerImgSrcs = writable({
+		tl: '' as imgSrcKey,
+		tr: '' as imgSrcKey,
+		bl: '' as imgSrcKey,
+		br: '' as imgSrcKey
+	});
+
+	const randomizeFrameCorners = () => {
+		let possibleFrameCornerKeys = Object.keys(imgSrcs).filter((key) => key.startsWith('corner'));
+		let i = getRandomIndex(possibleFrameCornerKeys);
+		const tl = possibleFrameCornerKeys.splice(i, 1)[0] as imgSrcKey;
+		i = getRandomIndex(possibleFrameCornerKeys);
+		const tr = possibleFrameCornerKeys.splice(i, 1)[0] as imgSrcKey;
+		i = getRandomIndex(possibleFrameCornerKeys);
+		const bl = possibleFrameCornerKeys.splice(i, 1)[0] as imgSrcKey;
+		i = getRandomIndex(possibleFrameCornerKeys);
+		const br = possibleFrameCornerKeys.splice(i, 1)[0] as imgSrcKey;
+
+		frameCornerImgSrcs.set({
+			tl: tl,
+			tr: tr,
+			bl: bl,
+			br: br
+		});
+	};
+
+	const getRandomIndex = (possibleFrameCornerKeys: string[]) => {
+		return Math.floor(Math.random() * possibleFrameCornerKeys.length);
+	};
+
+	randomizeFrameCorners();
+
+	const decorationIndex = writable(1);
+
+	const randomizeDecoration = () => {
+		decorationIndex.set(Math.floor(Math.random() * 4) + 1);
+	};
+
+	randomizeDecoration();
+
+	const getImgSrcKey = (mode: string) => {
+		return (mode + $decorationIndex.toString()) as imgSrcKey;
+	};
 
 	const numIdeas = ideas.length;
 
@@ -48,43 +94,71 @@
 			keepFocus: true
 		});
 	};
+
+	const newIdea = () => {
+		randomizeFrameCorners();
+		randomizeDecoration();
+		randomizeIdeas();
+	};
 </script>
 
 {#snippet frameCenter()}
-	<div id="content-area" class="flex h-full grow border-2 border-black bg-white">
+	<div id="content-area" class="flex h-full grow border border-black bg-white">
 		<h1
 			id="responsive-textbox"
-			class="m-auto p-10 text-center text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl {idea.font} leading-10"
+			class="m-auto p-10 text-center text-4xl sm:text-5xl md:text-5xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
 		>
 			{idea.text}
 		</h1>
 	</div>
 {/snippet}
 
-{#snippet frameCorner()}
-	<div class="size-14 flex-none border-2 border-black bg-white md:size-28">
-		<img src={waveFrame} class="h-full w-full" />
+{#snippet frameCorner(imgSrcKey: imgSrcKey)}
+	<div class="size-14 flex-none border-1 border-black bg-white p-1 md:size-28">
+		<img src={imgSrcs[imgSrcKey]} class="h-full w-full" />
 	</div>
 {/snippet}
 
-{#snippet frameHorizontal()}
-	<div class="flex grow border-2 border-black bg-white">
+{#snippet frameTop()}
+	<div class="flex grow border-1 border-black bg-white p-2">
 		<div class="h-full grow">
-			<img src={waveFrame} class="h-full" />
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full" />
 		</div>
-		<div class="h-full w-14 shrink-0 md:w-28">
-			<img src={waveFrame} class="h-full" />
+		<div class="flex h-full w-14 shrink-0 md:w-28">
+			<img src={imgSrcs[getImgSrcKey('center')]} class="m-auto h-full" />
 		</div>
 		<div class="h-full grow">
-			<img src={waveFrame} class="h-full" />
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-x-100" />
 		</div>
 	</div>
 {/snippet}
 
-{#snippet frameVertical()}
-	<div class="h-full w-14 flex-none border-2 border-black bg-white md:w-28">
-		<div class="h-full w-full">
-			<img src={waveFrame} class="h-full w-full" />
+{#snippet frameBottom()}
+	<div class="flex grow border-1 border-black bg-white p-2">
+		<div class="h-full grow">
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-y-100" />
+		</div>
+		<div class="flex h-full w-14 shrink-0 md:w-28">
+			<img src={imgSrcs[getImgSrcKey('center')]} class="m-auto h-full -scale-y-100" />
+		</div>
+		<div class="h-full grow">
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-x-100 -scale-y-100" />
+		</div>
+	</div>
+{/snippet}
+
+{#snippet frameLeft()}
+	<div class="h-full w-14 flex-none border-1 border-black bg-white md:w-28">
+		<div class="h-full w-full p-2">
+			<img src={imgSrcs[getImgSrcKey('vert')]} class="h-full w-full" />
+		</div>
+	</div>
+{/snippet}
+
+{#snippet frameRight()}
+	<div class="h-full w-14 flex-none border-1 border-black bg-white md:w-28">
+		<div class="h-full w-full p-2">
+			<img src={imgSrcs[getImgSrcKey('vert')]} class="h-full w-full -scale-x-100" />
 		</div>
 	</div>
 {/snippet}
@@ -94,38 +168,36 @@
 >
 	<div
 		id="frame"
-		class="mt-24 flex h-full max-h-[80vh] w-full max-w-[90vw] grow flex-col bg-black ring-2 ring-black sm:max-w-[80vw] md:max-w-180 lg:max-w-225"
+		class="mt-24 flex h-full max-h-[80vh] w-full max-w-[90vw] grow flex-col bg-black shadow-xl/20 ring-1 ring-black sm:max-w-[80vw] md:max-w-180 lg:max-w-225"
 	>
 		<div class="flex h-14 w-full md:h-28">
-			{@render frameCorner()}
-			{@render frameHorizontal()}
-			{@render frameCorner()}
+			{@render frameCorner($frameCornerImgSrcs.tl)}
+			{@render frameTop()}
+			{@render frameCorner($frameCornerImgSrcs.tr)}
 		</div>
 		<div class="flex size-28 w-full grow">
-			{@render frameVertical()}
+			{@render frameLeft()}
 			{@render frameCenter()}
-			{@render frameVertical()}
+			{@render frameRight()}
 		</div>
 		<div class="flex h-14 w-full md:h-28">
-			{@render frameCorner()}
-			{@render frameHorizontal()}
-			{@render frameCorner()}
+			{@render frameCorner($frameCornerImgSrcs.bl)}
+			{@render frameBottom()}
+			{@render frameCorner($frameCornerImgSrcs.br)}
 		</div>
 	</div>
 	<div class="mt-6 mb-6 flex gap-4">
-		<!-- <button class="h-12 w-12 rounded-full border border-slate-300 hover:bg-slate-100" /> -->
 		<button
 			id="randomize-button"
-			class="h-12 w-12 rounded-full border-4 border-black bg-gray-800 opacity-50 transition duration-300 hover:opacity-100"
-			on:click={randomizeIdeas}
+			class="group h-12 w-12 rounded-full border-2 border-black bg-black/30 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/50 hover:opacity-100"
+			on:click={newIdea}
 		>
-			<img src={randomizeIcon} />
+			<img src={randomizeIcon} class="transition duration-200 group-hover:scale-95" />
 		</button>
-		<!-- <button class="h-12 w-12 rounded-full border border-slate-300 hover:bg-slate-100" /> -->
 	</div>
 </div>
 
-<!-- <div>
+<div class="absolute top-0 left-0 -z-50">
 	<p class="font-0">a</p>
 	<p class="font-1">a</p>
 	<p class="font-2">a</p>
@@ -134,4 +206,7 @@
 	<p class="font-5">a</p>
 	<p class="font-6">a</p>
 	<p class="font-7">a</p>
-</div> -->
+	<p class="font-8">a</p>
+	<p class="font-9">a</p>
+	<p class="font-10">a</p>
+</div>

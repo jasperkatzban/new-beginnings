@@ -112,7 +112,7 @@
 	<div id="content-area" class="flex grow border border-black bg-white">
 		<h1
 			id="responsive-textbox"
-			class="m-auto p-10 text-center text-4xl sm:text-4xl md:text-4xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
+			class="m-auto p-2 text-center text-4xl sm:text-4xl md:text-4xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
 		>
 			{idea.text}
 		</h1>

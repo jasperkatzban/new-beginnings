@@ -7,7 +7,7 @@ const config = {
     kit: {
         appDir: 'app',
         adapter: adapter({
-            fallback: 'app.html'
+            fallback: '404.html'
         }),
         paths: {
             base: ''

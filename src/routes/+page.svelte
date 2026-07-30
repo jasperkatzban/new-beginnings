@@ -170,7 +170,7 @@
 {/snippet}
 
 <div
-	class="flex min-h-screen flex-col items-center justify-center {$backgroundColor} transition duration-500"
+	class="flex min-h-dvh flex-col items-center justify-center {$backgroundColor} transition duration-500"
 >
 	<div
 		id="frame"

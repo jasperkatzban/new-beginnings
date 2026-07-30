@@ -45,7 +45,10 @@
 	const decorationIndex = writable(1);
 
 	const randomizeDecoration = () => {
-		decorationIndex.set(Math.floor(Math.random() * 4) + 1);
+		const oldDecorationIndex = $decorationIndex;
+		while ($decorationIndex === oldDecorationIndex) {
+			decorationIndex.set(Math.floor(Math.random() * 4) + 1);
+		}
 	};
 
 	randomizeDecoration();
@@ -87,7 +90,10 @@
 
 	const randomizeIdeas = () => {
 		ideaIndex.set(Math.floor(Math.random() * numIdeas));
-		backgroundColor.set(backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
+		const oldColor = $backgroundColor;
+		while ($backgroundColor === oldColor) {
+			backgroundColor.set(backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
+		}
 		goto('?idea=' + $ideaIndex.toString(), {
 			replaceState: true,
 			noScroll: true,
@@ -106,7 +112,7 @@
 	<div id="content-area" class="flex h-full grow border border-black bg-white">
 		<h1
 			id="responsive-textbox"
-			class="m-auto p-10 text-center text-4xl sm:text-5xl md:text-5xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
+			class="m-auto p-10 text-center text-4xl sm:text-4xl md:text-4xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
 		>
 			{idea.text}
 		</h1>
@@ -189,7 +195,7 @@
 	<div class="mt-6 mb-6 flex gap-4">
 		<button
 			id="randomize-button"
-			class="group h-12 w-12 rounded-full border-2 border-black bg-black/30 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/50 hover:opacity-100"
+			class="group h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100"
 			on:click={newIdea}
 		>
 			<img src={randomizeIcon} class="transition duration-200 group-hover:scale-95" />

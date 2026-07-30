@@ -379,7 +379,7 @@ const ideas = [
     },
     {
         "id": 54,
-        "text": "Be an artist",
+        "text": "Read",
         "rank": "",
         "font": "font-6",
         "rotation": "-rotate-6"
@@ -904,10 +904,10 @@ const ideas = [
     },
     {
         "id": 129,
-        "text": "Read",
+        "text": "Be an artist",
         "rank": "",
-        "font": "font-7",
-        "rotation": "-rotate-9"
+        "font": "font-9",
+        "rotation": "rotate-5"
     },
     {
         "id": 130,

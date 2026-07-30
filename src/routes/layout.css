@@ -1,2 +1,28 @@
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Butterfly+Kids&family=Caveat:wght@400..700&family=Covered+By+Your+Grace&family=Crafty+Girls&family=Gochi+Hand&family=Indie+Flower&family=Just+Another+Hand&family=Mynerve&family=Pangolin&family=Patrick+Hand+SC&family=Reenie+Beanie&display=swap");
+@import "tailwindcss";
 @plugin '@tailwindcss/typography';
+
+@theme {
+  --font-patrick-hand: "Patrick Hand SC", cursive;
+  --font-gochi-hand: "Gochi Hand", cursive;
+  --font-caveat: "Caveat", cursive;
+  --font-covered-by-your-grace: "Covered By Your Grace", cursive;
+  --font-crafty-girls: "Crafty Girls", cursive;
+  --font-indie-flower: "Indie Flower", cursive;
+  --font-pangolin: "Pangolin", cursive;
+  --font-just-another-hand: "Just Another Hand", cursive;
+  --font-mynerve: "Mynerve", cursive;
+  --font-reenie-beanie: "Reenie Beanie", cursive;
+  --font-butterfly-kids: "Butterfly Kids", cursive;
+  --font-0: var(--font-patrick-hand);
+  --font-1: var(--font-gochi-hand);
+  --font-2: var(--font-caveat);
+  --font-3: var(--font-covered-by-your-grace);
+  --font-4: var(--font-indie-flower);
+  --font-5: var(--font-just-another-hand);
+  --font-6: var(--font-mynerve);
+  --font-7: var(--font-pangolin);
+  --font-8: var(--font-crafty-girls);
+  --font-9: var(--font-reenie-beanie);
+  --font-10: var(--font-butterfly-kids);
+}

@@ -109,7 +109,7 @@
 </script>
 
 {#snippet frameCenter()}
-	<div id="content-area" class="flex h-full grow border border-black bg-white">
+	<div id="content-area" class="flex grow border border-black bg-white">
 		<h1
 			id="responsive-textbox"
 			class="m-auto p-10 text-center text-4xl sm:text-4xl md:text-4xl lg:text-5xl {idea.font} {idea.rotation} leading-10"
@@ -127,14 +127,14 @@
 
 {#snippet frameTop()}
 	<div class="flex grow border-1 border-black bg-white p-2">
-		<div class="h-full grow">
-			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full" />
+		<div class="grow">
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full w-full" />
 		</div>
 		<div class="flex h-full w-14 shrink-0 md:w-28">
 			<img src={imgSrcs[getImgSrcKey('center')]} class="m-auto h-full" />
 		</div>
-		<div class="h-full grow">
-			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-x-100" />
+		<div class="grow">
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full w-full -scale-x-100" />
 		</div>
 	</div>
 {/snippet}
@@ -142,19 +142,19 @@
 {#snippet frameBottom()}
 	<div class="flex grow border-1 border-black bg-white p-2">
 		<div class="h-full grow">
-			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-y-100" />
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full w-full -scale-y-100" />
 		</div>
 		<div class="flex h-full w-14 shrink-0 md:w-28">
 			<img src={imgSrcs[getImgSrcKey('center')]} class="m-auto h-full -scale-y-100" />
 		</div>
 		<div class="h-full grow">
-			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full -scale-x-100 -scale-y-100" />
+			<img src={imgSrcs[getImgSrcKey('horz')]} class="h-full w-full -scale-x-100 -scale-y-100" />
 		</div>
 	</div>
 {/snippet}
 
 {#snippet frameLeft()}
-	<div class="h-full w-14 flex-none border-1 border-black bg-white md:w-28">
+	<div class="w-14 flex-none border border-black bg-white md:w-28">
 		<div class="h-full w-full p-2">
 			<img src={imgSrcs[getImgSrcKey('vert')]} class="h-full w-full" />
 		</div>
@@ -162,7 +162,7 @@
 {/snippet}
 
 {#snippet frameRight()}
-	<div class="h-full w-14 flex-none border-1 border-black bg-white md:w-28">
+	<div class="w-14 flex-none border-1 border-black bg-white md:w-28">
 		<div class="h-full w-full p-2">
 			<img src={imgSrcs[getImgSrcKey('vert')]} class="h-full w-full -scale-x-100" />
 		</div>
@@ -181,7 +181,7 @@
 			{@render frameTop()}
 			{@render frameCorner($frameCornerImgSrcs.tr)}
 		</div>
-		<div class="flex size-28 w-full grow">
+		<div class="flex size-28 h-full w-full grow">
 			{@render frameLeft()}
 			{@render frameCenter()}
 			{@render frameRight()}

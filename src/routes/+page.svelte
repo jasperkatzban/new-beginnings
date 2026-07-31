@@ -63,10 +63,12 @@
 	let dateSeed = [today.getUTCDate(), today.getUTCMonth(), today.getUTCFullYear()].toString();
 	let indexSelector = new Prando(dateSeed);
 
+	const todayIdeaIndex = Math.floor(indexSelector.next(0, numIdeas));
+
 	const ideaIndex = writable(
 		page.url.searchParams.get('idea')
 			? parseInt(page.url.searchParams.get('idea') || '')
-			: Math.floor(indexSelector.next(0, numIdeas))
+			: todayIdeaIndex
 	);
 
 	const idea = $derived(ideas[$ideaIndex]);
@@ -106,6 +108,21 @@
 		randomizeDecoration();
 		randomizeIdeas();
 	};
+
+	const goToToday = () => {
+		ideaIndex.set(todayIdeaIndex);
+		const oldColor = $backgroundColor;
+		while ($backgroundColor === oldColor) {
+			backgroundColor.set(backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
+		}
+		goto('?idea=' + $ideaIndex.toString(), {
+			replaceState: true,
+			noScroll: true,
+			keepFocus: true
+		});
+	};
+
+	const isToday = $derived($ideaIndex == todayIdeaIndex);
 </script>
 
 {#snippet frameCenter()}
@@ -192,13 +209,25 @@
 			{@render frameCorner($frameCornerImgSrcs.br)}
 		</div>
 	</div>
-	<div class="mt-6 mb-6 flex gap-4">
+	<div class="mt-6 mb-6 flex gap-6">
+		<button
+			id="today-button"
+			class="group h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 shadow-md/40 transition duration-200
+			{isToday ? 'opacity-20' : 'opacity-70'}
+			{isToday ? '' : 'hover:scale-130'}
+			{isToday ? '' : 'hover:bg-white/80'}
+			{isToday ? '' : 'hover:opacity-100'}
+			{isToday ? '' : 'active:scale-115'}"
+			on:click={goToToday}
+		>
+			<p class="m-auto text-center font-0 text-sm">TODAY</p>
+		</button>
 		<button
 			id="randomize-button"
-			class="group h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100"
+			class="h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100 active:scale-115"
 			on:click={newIdea}
 		>
-			<img src={randomizeIcon} class="transition duration-200 group-hover:scale-95" />
+			<img src={randomizeIcon} />
 		</button>
 	</div>
 </div>

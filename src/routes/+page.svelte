@@ -199,62 +199,64 @@
 	</div>
 {/snippet}
 
-<div
-	class="flex min-h-dvh flex-col items-center justify-center {$backgroundColor} transition duration-500"
->
+{#await preload() then _}
 	<div
-		id="frame"
-		class="mt-24 flex h-full max-h-[80vh] w-full max-w-[90vw] grow flex-col bg-black shadow-xl/20 ring-1 ring-black sm:max-w-[80vw] md:max-w-180 lg:max-w-225"
+		class="flex min-h-dvh flex-col items-center justify-center {$backgroundColor} transition duration-500"
 	>
-		<div class="flex h-14 w-full md:h-28">
-			{@render frameCorner($frameCornerImgSrcs.tl)}
-			{@render frameTop()}
-			{@render frameCorner($frameCornerImgSrcs.tr)}
+		<div
+			id="frame"
+			class="mt-24 flex h-full max-h-[80vh] w-full max-w-[90vw] grow flex-col bg-black shadow-xl/20 ring-1 ring-black sm:max-w-[80vw] md:max-w-180 lg:max-w-225"
+		>
+			<div class="flex h-14 w-full md:h-28">
+				{@render frameCorner($frameCornerImgSrcs.tl)}
+				{@render frameTop()}
+				{@render frameCorner($frameCornerImgSrcs.tr)}
+			</div>
+			<div class="flex size-28 h-full w-full grow">
+				{@render frameLeft()}
+				{@render frameCenter()}
+				{@render frameRight()}
+			</div>
+			<div class="flex h-14 w-full md:h-28">
+				{@render frameCorner($frameCornerImgSrcs.bl)}
+				{@render frameBottom()}
+				{@render frameCorner($frameCornerImgSrcs.br)}
+			</div>
 		</div>
-		<div class="flex size-28 h-full w-full grow">
-			{@render frameLeft()}
-			{@render frameCenter()}
-			{@render frameRight()}
-		</div>
-		<div class="flex h-14 w-full md:h-28">
-			{@render frameCorner($frameCornerImgSrcs.bl)}
-			{@render frameBottom()}
-			{@render frameCorner($frameCornerImgSrcs.br)}
-		</div>
-	</div>
-	<div class="mt-6 mb-6 flex gap-6">
-		<button
-			id="today-button"
-			class="group h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 shadow-md/40 transition duration-200
+		<div class="mt-6 mb-6 flex gap-6">
+			<button
+				id="today-button"
+				class="group h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 shadow-md/40 transition duration-200
 			{isToday ? 'opacity-20' : 'opacity-70'}
 			{isToday ? '' : 'hover:scale-130'}
 			{isToday ? '' : 'hover:bg-white/80'}
 			{isToday ? '' : 'hover:opacity-100'}
 			{isToday ? '' : 'active:scale-115'}"
-			on:click={goToToday}
-		>
-			<p class="m-auto text-center font-0 text-sm">TODAY</p>
-		</button>
-		<button
-			id="randomize-button"
-			class="h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100 active:scale-115"
-			on:click={newIdea}
-		>
-			<img src={randomizeIcon} />
-		</button>
+				on:click={goToToday}
+			>
+				<p class="m-auto text-center font-0 text-sm">TODAY</p>
+			</button>
+			<button
+				id="randomize-button"
+				class="h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100 active:scale-115"
+				on:click={newIdea}
+			>
+				<img src={randomizeIcon} />
+			</button>
+		</div>
 	</div>
-</div>
 
-<div class="absolute top-0 left-0 -z-50">
-	<p class="font-0">a</p>
-	<p class="font-1">a</p>
-	<p class="font-2">a</p>
-	<p class="font-3">a</p>
-	<p class="font-4">a</p>
-	<p class="font-5">a</p>
-	<p class="font-6">a</p>
-	<p class="font-7">a</p>
-	<p class="font-8">a</p>
-	<p class="font-9">a</p>
-	<p class="font-10">a</p>
-</div>
+	<div class="absolute top-0 left-0 -z-50">
+		<p class="font-0">a</p>
+		<p class="font-1">a</p>
+		<p class="font-2">a</p>
+		<p class="font-3">a</p>
+		<p class="font-4">a</p>
+		<p class="font-5">a</p>
+		<p class="font-6">a</p>
+		<p class="font-7">a</p>
+		<p class="font-8">a</p>
+		<p class="font-9">a</p>
+		<p class="font-10">a</p>
+	</div>
+{/await}

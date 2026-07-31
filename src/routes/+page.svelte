@@ -124,6 +124,8 @@
 
 	const goToToday = () => {
 		ideaIndex.set(todayIdeaIndex);
+		randomizeFrameCorners();
+		randomizeDecoration();
 		const oldColor = $backgroundColor;
 		while ($backgroundColor === oldColor) {
 			backgroundColor.set(backgroundColors[Math.floor(Math.random() * backgroundColors.length)]);
@@ -232,7 +234,7 @@
 			{isToday ? '' : 'hover:bg-white/80'}
 			{isToday ? '' : 'hover:opacity-100'}
 			{isToday ? '' : 'active:scale-115'}"
-				on:click={goToToday}
+				on:click={isToday ? null : goToToday}
 			>
 				<p class="m-auto text-center font-0 text-sm">TODAY</p>
 			</button>

@@ -9,6 +9,19 @@
 	import randomizeIcon from '$lib/assets/randomizeIcon.svg';
 	import * as imgSrcs from '$lib/assets/frame/';
 
+	// preload all image sources
+	function preload() {
+		let imgPreloads = Object.keys(imgSrcs).map((key) => {
+			return new Promise((resolve) => {
+				let src = imgSrcs[key as imgSrcKey];
+				let img = new Image();
+				img.onload = resolve;
+				img.src = src;
+			});
+		});
+		return Promise.all(imgPreloads);
+	}
+
 	type imgSrcKey = keyof typeof imgSrcs;
 	const frameCornerImgSrcs = writable({
 		tl: '' as imgSrcKey,

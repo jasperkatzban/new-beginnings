@@ -344,7 +344,7 @@ const ideas = [
     },
     {
         "id": 49,
-        "text": "Make cards for students Be a clothing designer",
+        "text": "Make cards for students",
         "rank": "3",
         "font": "font-9",
         "rotation": "rotate-6"
@@ -944,6 +944,13 @@ const ideas = [
         "font": "font-2",
         "rotation": "rotate-10"
     },
+    {
+        "id:": 135,
+        "text": "Be a clothing designer",
+        "rank": "",
+        "font": "font-4",
+        "rotation": "rotate-6"
+    }
 ]
 
 export default ideas;

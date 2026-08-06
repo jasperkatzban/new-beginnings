@@ -1,4 +1,6 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve */
+
 	import { writable } from 'svelte/store';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -7,6 +9,7 @@
 
 	import ideas from '$lib/ideas.js';
 	import randomizeIcon from '$lib/assets/randomizeIcon.svg';
+	import shareIcon from '$lib/assets/shareIcon.svg';
 	import * as imgSrcs from '$lib/assets/frame/';
 
 	// preload all image sources
@@ -137,6 +140,25 @@
 		});
 	};
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	let complete = $state(false);
+
+	async function shareCurrentIdea() {
+		const url = window.location.href
+		const title =  "Check out what's next!"
+		const shareData: ShareData = { url, title };
+
+		if (navigator.canShare && navigator.canShare(shareData)) {
+			await navigator.share(shareData);
+		} else {
+			await navigator.clipboard.writeText(url);
+			complete = true;
+			setTimeout(() => {
+				complete = false;
+			}, 500);
+		}
+	}
+
 	const isToday = $derived($ideaIndex == todayIdeaIndex);
 </script>
 
@@ -244,6 +266,13 @@
 				on:click={newIdea}
 			>
 				<img src={randomizeIcon} />
+			</button>
+			<button
+				id="share-button"
+				class="h-12 w-12 rounded-full border-2 border-black bg-gray-400/50 p-2 opacity-70 shadow-md/40 transition duration-200 hover:scale-130 hover:bg-white/80 hover:opacity-100 active:scale-115"
+				on:click={shareCurrentIdea}
+			>
+				<img src={shareIcon} />
 			</button>
 		</div>
 	</div>
